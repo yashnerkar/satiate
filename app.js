@@ -13,7 +13,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/", organization)
-// connection to database
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.get("*", function (_, res) {
     res.sendFile(
