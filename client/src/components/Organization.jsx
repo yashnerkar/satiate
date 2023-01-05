@@ -43,7 +43,7 @@ const Organization = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(`/organizations/:${paramName}`, {
+      const response = await fetch(`/server/organizations/:${paramName}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

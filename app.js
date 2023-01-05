@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/", organization)
+app.use("/", organization);
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.get("*", function (_, res) {
     res.sendFile(
