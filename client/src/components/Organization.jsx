@@ -50,7 +50,7 @@ const Organization = () => {
         },
       });
       const organizationData = await response.json();
-      console.log(organizationData);
+      // console.log(organizationData);
       setuserData(organizationData.user)
     };
     console.log(userData.length);
