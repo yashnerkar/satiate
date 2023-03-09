@@ -19,7 +19,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />{" "}
         <Route path="/about" element={<About />} />{" "}
         <Route exact path="/organizations/:name" element={<Organization />} />{" "}
-      </Routes>{" "}
+      </Routes>
     </Router>
   );
 }
