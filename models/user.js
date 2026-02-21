@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -17,8 +16,10 @@ const userSchema = new mongoose.Schema({
     organization: {
         type: String,
     },
-
-
+    donatedAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const User = mongoose.model('User', userSchema);

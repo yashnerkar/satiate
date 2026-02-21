@@ -1,40 +1,94 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Heart, Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
 const Navbar = () => {
-  const fontStyle = {
-    fontFamily: "Lato ,sans-serif",
-    fontSize: "1.5rem",
-    marginRight: "3px"
-  }
-  const fontStyle1 = {
-    fontFamily: "Lato ,sans-serif",
-    fontSize: "1.5rem",
-    marginRight: "5px"
-  }
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  const links = [
+    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
+    { to: '/contact', label: 'Contact' },
+  ];
+
   return (
-    <div className='m-0 p-0'>
-      <nav className="navbar navbar-expand-lg navbar-light border border-dark " >
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#" style={fontStyle}>Satiate |</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="/" style={fontStyle1}>Home</a>
-              <a className="nav-link" href="/about" style={fontStyle1}>About Us</a>
-              <a className="nav-link" href="/contact" style={fontStyle1}>Contact Us</a>
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20 group-hover:bg-primary/30 transition-colors">
+              <Heart className="h-5 w-5 text-primary" />
+            </div>
+            <span className="text-xl font-bold tracking-tight">
+              <span className="gradient-text">Satiate</span>
+            </span>
+          </Link>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-1">
+            {links.map(link => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  location.pathname === link.to
+                    ? 'text-primary bg-primary/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA + Mobile Toggle */}
+          <div className="flex items-center gap-3">
+            <Link to="/register">
+              <Button size="sm" className="hidden sm:inline-flex">
+                Register NGO
+              </Button>
+            </Link>
+            <button
+              className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <div className="md:hidden pb-4 animate-fade-in">
+            <div className="flex flex-col gap-1">
+              {links.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === link.to
+                      ? 'text-primary bg-primary/10'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link to="/register" onClick={() => setMobileOpen(false)}>
+                <Button size="sm" className="mt-2 w-full sm:hidden">
+                  Register NGO
+                </Button>
+              </Link>
             </div>
           </div>
-          <Link
-            to="/register"
-            style={{ background: "#F44E77" }}
-            className="btn px-3 py-2 my-2 my-sm-0 text-light rounded-3" type="submit">Register Organization</Link>
-        </div>
-      </nav>
-
-    </div>
-  )
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
